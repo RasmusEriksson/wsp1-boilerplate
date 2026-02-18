@@ -3,15 +3,8 @@
 {% block content %}
 {% include "components/header.njk" %}
 <main class="wrapper">
-    <h1>WELCOME TO THE BLOGSITE WOAH!!!!</h1>
-    <ul>
-        {% for post in rows %}
-        <li>
-            <h2>{{post.title}}</h2>
-            <p>posted by {{post.name}} at {{post.created_at}}</p>
-        </li> 
-        {% endfor %}
-    </ul>
+    <h1>Welcome to the website</h1>
+    <a href="/posts">Click here to go to the posts!</a>
     
 </main>
 {% include "components/footer.njk" %}

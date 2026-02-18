@@ -1,0 +1,20 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+{% include "components/header.njk" %}
+<main class="wrapper">
+    <h1>WELCOME TO THE BLOGSITE WOAH!!!!</h1>
+    <ul>
+        {% for post in rows %}
+        <li>
+            <h2>{{post.title}}</h2>
+            <p>posted by {{post.name}} at {{post.created_at}}</p>
+        </li> 
+        {% else %}
+            <h2>no posts, whoopsies! :P</h2>
+        {% endfor %}
+    </ul>
+    
+</main>
+{% include "components/footer.njk" %}
+{% endblock %}
