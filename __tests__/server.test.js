@@ -18,5 +18,11 @@ describe("Server", () => {
             expect(res.statusCode).toBe(500)
             expect(res.text).toContain("Serverfel")
         })
+
+        it("POST, id not int, should respond with 500 for server error", async () => {
+            const res = await request(app).get("/posts/wewef")
+            expect(res.statusCode).toBe(500)
+            expect(res.text).toContain("Serverfel: Id is not a valid integer")
+        })
 })
 

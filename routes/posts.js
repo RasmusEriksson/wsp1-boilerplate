@@ -1,5 +1,6 @@
 import express from "express"
 import pool from "../config/db.js"
+import {body, param, validationResult} from "express-validator"
 
 const router = express.Router()
 
@@ -21,8 +22,15 @@ router.get("/", async (req, res, next) => {
     }
 })
 
-router.get("/:id", async (req,res,next) => {
+router.get("/:id",
+    param("id").isInt().withMessage("Id måste vara heltal"), async (req,res,next) => {
     try {
+
+        const errors = validationResult(req)
+        if (!errors.isEmpty) {
+            return res.status(400).json({ errors: errors.array()})
+        }
+
         const postId = req.params.id
         if (!Number.isInteger(Number(postId))) {
             throw new Error("Id is not a valid integer");
@@ -45,8 +53,6 @@ router.get("/:id", async (req,res,next) => {
             title:"Blogposts!",
             rows:row
         })
-
-        console.log(row)
         
     }
     catch (err) {
