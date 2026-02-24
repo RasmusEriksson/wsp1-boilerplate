@@ -1,5 +1,6 @@
 import "dotenv/config"
 import express from "express"
+import session from "express-session"
 import nunjucks from "nunjucks"
 import morgan from 'morgan'
 
@@ -23,6 +24,17 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.use(express.static("public"))
+
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        sameSite: true,
+        secure: false,
+        maxAge: 1000 * 60 * 60 * 24
+    }
+}))
 
 app.use("/", indexRouter)
 app.use("/posts", postsRouter)

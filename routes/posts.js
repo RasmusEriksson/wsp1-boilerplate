@@ -60,6 +60,31 @@ router.get("/:id",
     }
 })
 
+router.post("/",
+    body("content").trim().escape().withMessage("Innehållet är ogiltigt"),
+    async (req, res, next) => {
+        try {
+            const errors = validationResult(req)
+            if (!errors.isEmpty()){
+                return res.status(400).json({errors: errors})
+            }
+
+            const content = req.body.content
+
+            const [result] = await pool.query(
+                    `INSERT INTO post (content, user_id)
+                    VALUES (?,?)`,
+                    [content, req.user.id]
+                )
+            
+            res.status(201).json({postId: result.insertId})
+        }
+        catch (err) {
+            next(err)
+        }
+    }
+)
+
 router.get('/error', (req, res) => {
     throw new Error('Test error')
 })
