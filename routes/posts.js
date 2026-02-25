@@ -60,6 +60,7 @@ router.get("/:id",
     }
 })
 
+/*
 router.post("/",
     body("content").trim().escape().withMessage("Innehållet är ogiltigt"),
     async (req, res, next) => {
@@ -84,7 +85,7 @@ router.post("/",
         }
     }
 )
-
+*/
 router.get('/error', (req, res) => {
     throw new Error('Test error')
 })

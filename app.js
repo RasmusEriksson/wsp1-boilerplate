@@ -6,6 +6,7 @@ import morgan from 'morgan'
 
 import indexRouter from './routes/index.js'
 import postsRouter from './routes/posts.js'
+import userRouter from './routes/user.js'
 
 const app = express()
 const port = 3000 || process.env.PORT
@@ -36,8 +37,12 @@ app.use(session({
     }
 }))
 
+app.use(express.urlencoded({extended: false}))
+app.use(express.json())
+
 app.use("/", indexRouter)
 app.use("/posts", postsRouter)
+app.use("/users", userRouter)
 
 app.use((req, res, next) => {
     res.status(404).send("Sidan kunde inte hittas.")
