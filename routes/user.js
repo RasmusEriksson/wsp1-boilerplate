@@ -2,6 +2,7 @@ import express from "express"
 import pool from "../config/db.js"
 import bycrypt from "bcrypt"
 import {body, param, validationResult} from "express-validator"
+import session from "express-session"
 
 const router = express.Router()
 
@@ -32,7 +33,14 @@ router.post("/login",
                 return res.status(400).json({ error: "Incorrect lösenord eller användarnamn"})
             }
 
-            return res.json({msg:"Användar hittad",user:user})
+            //Om allt fungerar så:
+            req.session.userId = user.id
+            req.session.userName = user.name
+            req.session.authenticated = true
+
+            console.log(res.session)
+
+            return res.redirect("/users/profile")
 
             // const {username, password} = req.body
 
@@ -42,6 +50,13 @@ router.post("/login",
             console.error(err)
             res.status(500).json({ error: "Något gick fel"})
         }
+})
+
+router.get("/profile",(req,res) =>  {
+    if (!res.session.authenticated) {
+        return res.status(401).json({error:"Du måste vara inloggad för att se denna sida"})
+    }
+    res.json({message: "Välkommen till din profil!", user: req.session})
 })
 
 router.get("/testHash/:password", async (req,res) => {

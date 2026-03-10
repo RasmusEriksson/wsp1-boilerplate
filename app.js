@@ -26,6 +26,7 @@ app.use(express.json())
 
 app.use(express.static("public"))
 
+
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -39,6 +40,7 @@ app.use(session({
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
+
 
 app.use("/", indexRouter)
 app.use("/posts", postsRouter)
