@@ -4,7 +4,8 @@ import pool from "../config/db.js"
 const router = express.Router()
 
 router.get("/", (req, res) => {
-    res.render("index.njk", {title: "starting page"})
+    console.log(req.session.userName)
+    res.render("index.njk", {title: "starting page", username: req.session.userName})
 })
 
 router.get('/error', (req, res) => {

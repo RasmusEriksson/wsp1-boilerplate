@@ -4,6 +4,9 @@
 {% include "components/header.njk" %}
 <main class="wrapper">
     <h1>Welcome to the website</h1>
+    {% if username %}
+        {% include "components/profileIcon.njk" %}
+    {% endif %}
     <a href="/posts">Click here to go to the posts!</a>
     
 </main>

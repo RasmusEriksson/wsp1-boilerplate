@@ -38,7 +38,7 @@ router.post("/login",
             req.session.userName = user.name
             req.session.authenticated = true
 
-            console.log(res.session)
+            console.log(req.session)
 
             return res.redirect("/users/profile")
 
@@ -53,7 +53,7 @@ router.post("/login",
 })
 
 router.get("/profile",(req,res) =>  {
-    if (!res.session.authenticated) {
+    if (!req.session.authenticated) {
         return res.status(401).json({error:"Du måste vara inloggad för att se denna sida"})
     }
     res.json({message: "Välkommen till din profil!", user: req.session})
